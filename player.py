@@ -12,7 +12,8 @@ class Player(pygame.sprite.Sprite):
         # thuoc tinh chuyen dong
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed  =   200
+        self.speed = 200
+
     def input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -29,12 +30,16 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
-        print(self.direction)
-
-    def move(self,dt):
-        self.pos += self.direction*self.speed*dt
-        self.rect.center = self.pos
-
+    def move(self, dt):
+        # chuẩn hóa vector
+        if self.direction.magnitude() > 0:
+            self.direction = self.direction.normalize()
+        #chuyen dong ngang
+        self.pos.x += self.direction.x * self.speed * dt
+        self.rect.centerx = self.pos.x
+        #chuyen dong thang dung
+        self.pos.y += self.direction.y * self.speed * dt
+        self.rect.centery = self.pos.y
     def update(self, dt):
         self.input()
         self.move(dt)
