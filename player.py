@@ -49,7 +49,6 @@ class Player(pygame.sprite.Sprite):
         for animation in self.animations.keys():
             full_path = 'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/character/' + animation
             self.animations[animation] = import_folder(full_path)
-        print(self.animations)
 
     def animate(self, dt):
         self.frame_index += 4 * dt
@@ -88,7 +87,6 @@ class Player(pygame.sprite.Sprite):
                 self.timers['tool switch'].activate()
                 self.tool_index += 1
                 self.tool_index = self.tool_index if self.tool_index < len(self.tools) else 0
-                print(self.tool_index)
                 self.selected_tool = self.tools[self.tool_index]
 
             #seed use
@@ -96,14 +94,12 @@ class Player(pygame.sprite.Sprite):
                 self.timers['seed use'].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
-                print('use seed')
             #change seed
             if keys[pygame.K_e] and not self.timers['seed switch'].active:
                 self.timers['seed switch'].activate()
                 self.seed_index += 1
                 self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
                 self.selected_seed = self.seeds[self.seed_index]
-                print(self.selected_seed)
 
     def get_status(self):
         # kiểm tra người chơi có đang di chuyen hay k
