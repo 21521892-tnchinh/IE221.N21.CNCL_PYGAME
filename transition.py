@@ -24,5 +24,7 @@ class Transition:
             self.reset()
         if self.color > 255:
             self.color = 255
+            self.player.sleep = False
+            self.speed = -2
         self.image.fill((self.color, self.color, self.color))
         self.display_surface.blit(self.image, (0, 0), special_flags = pygame.BLEND_RGB_MULT)
