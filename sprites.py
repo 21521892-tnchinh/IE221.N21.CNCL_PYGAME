@@ -89,6 +89,9 @@ class Tree(Generic):
         # damage the tree
         self.health -= 1
 
+        #play sound
+
+
         # remove an apple
         if len(self.apple_sprites.sprites()) > 0:
             random_apple = choice(self.apple_sprites.sprites())
