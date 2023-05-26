@@ -61,13 +61,19 @@ class SoilLayer:
         self.water_sprites = pygame.sprite.Group()
         self.plant_sprites = pygame.sprite.Group()
 
-
         # graphics
         self.soil_surfs = import_folder_dict('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/soil/')
         self.water_surfs = import_folder('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/soil_water')
 
         self.create_soil_grid()
         self.create_hit_rects()
+
+        #sound
+        self.hoe_sound = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/hoe.wav')
+        self.hoe_sound.set_volume(0.2)
+
+        self.plant_sound = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/plant.wav')
+        self.plant_sound.set_volume(0.2)
     def create_soil_grid(self):
         ground = pygame.image.load('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/world/ground.png')
         h_tiles, v_tiles = ground.get_width() // TILE_SIZE, ground.get_height() // TILE_SIZE
@@ -90,6 +96,8 @@ class SoilLayer:
 
         for rect in self.hit_rects:
             if rect.collidepoint(point):
+                self.hoe_sound.play()
+
                 x = rect.x // TILE_SIZE
                 y = rect.y // TILE_SIZE
 
@@ -139,6 +147,7 @@ class SoilLayer:
     def plant_seed(self, target_pos, seed):
         for soil_sprite in self.soil_sprites.sprites():
             if soil_sprite.rect.collidepoint(target_pos):
+                self.plant_sound.play()
 
                 x = soil_sprite.rect.x // TILE_SIZE
                 y = soil_sprite.rect.y // TILE_SIZE
