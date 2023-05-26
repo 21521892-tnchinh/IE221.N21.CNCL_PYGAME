@@ -18,7 +18,7 @@ class Level:
         self.tree_sprites = pygame.sprite.Group()
         self.interaction_sprites = pygame.sprite.Group()
 
-        self.soil_layer = SoilLayer(self.all_sprites)
+        self.soil_layer = SoilLayer(self.all_sprites,self.collision_sprites)
         self.setup()
         self.overlay = Overlay(self.player)
         self.transition = Transition(self.reset,self.player)
@@ -87,6 +87,8 @@ class Level:
         self.player.item_inventory[item] +=1
 
     def reset(self):
+        #plant
+        self.soil_layer.update_plant()
 
         #soil
         self.soil_layer.remove_water()
@@ -103,10 +105,17 @@ class Level:
         #     tree.apple_sprites.empty()  # Xóa tất cả các quả táo trên cây
         #     tree.create_fruit()
 
+    def plant_collision(self):
+        if self.soil_layer.plant_sprites:
+            for plant in self.soil_layer.plant_sprites.sprites():
+                if plant.harvestable and plant.rect.colliderect(self.player.hitbox):
+                    plant.kill()
+
     def run(self, dt):
         self.display_surface.fill('black')
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
+        self.plant_collision()
 
         self.overlay.display()
 
