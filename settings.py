@@ -29,7 +29,7 @@ LAYERS = {
     'main': 7,
     'house top': 8,
     'fruit': 9,
-    'rain drops': 10
+    'rain drops': 10,
 }
 
 APPLE_POS = {
@@ -52,3 +52,9 @@ PURCHASE_PRICES = {
 	'corn': 4,
 	'tomato': 5
 }
+FPS = 60
+# settings.py
+MENU_BACKGROUND_COLOR = (0, 0, 0)
+MENU_TITLE_COLOR = (255, 255, 255)
+MENU_OPTION_COLOR = (255, 255, 255)
+MENU_OPTION_HOVER_COLOR = (138, 43, 226)

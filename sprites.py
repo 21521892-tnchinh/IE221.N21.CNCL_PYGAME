@@ -12,7 +12,10 @@ class Generic(pygame.sprite.Sprite):
         self.z = z
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.75)
         self.apple_sprites = pygame.sprite.Group()
+
     def create_fruit(self):
+        pass
+    def damage(self):
         pass
 class Interaction(Generic):
     def __init__(self, pos, size, groups, name):
@@ -71,13 +74,11 @@ class Tree(Generic):
         # tree attributes
         self.health = 5
         self.alive = True
-        stump_path = f'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/stumps/{"small" if name == "Small" else "large"}.png'
+        stump_path = f'graphics/stumps/{"small" if name == "Small" else "large"}.png'
         self.stump_surf = pygame.image.load(stump_path).convert_alpha()
-        self.invul_timer = Timer(200)
 
         # apples
-        self.apple_surf = pygame.image.load(
-            'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/fruit/apple.png')
+        self.apple_surf = pygame.image.load('graphics/fruit/apple.png')
         self.apple_pos = APPLE_POS[name]
         self.apple_sprites = pygame.sprite.Group()
         self.create_fruit()
@@ -85,7 +86,7 @@ class Tree(Generic):
         self.player_add = player_add
 
         #sound
-        self.axe_sound = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/axe.mp3')
+        self.axe_sound = pygame.mixer.Sound('audio/axe.mp3')
 
     def damage(self):
 
@@ -121,7 +122,7 @@ class Tree(Generic):
 
     def create_fruit(self):
         for pos in self.apple_pos:
-            if randint(0, 10) < 3:
+            if randint(0, 10) < 5:
                 x = pos[0] + self.rect.left
                 y = pos[1] + self.rect.top
                 Generic(

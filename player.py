@@ -5,7 +5,7 @@ from timer import Timer
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, group, collision_sprites, tree_sprites,interaction, soil_layer, toggle_shop):
+    def __init__(self, pos, group, collision_sprites, tree_sprites, interaction, soil_layer, toggle_shop, toggle_pause):
         super().__init__(group)
 
         self.import_assets()
@@ -61,10 +61,12 @@ class Player(pygame.sprite.Sprite):
         self.sleep = False
         self.soil_layer = soil_layer
         self.toggle_shop = toggle_shop
+        self.toggle_pause = toggle_pause
 
-        #sound
-        self.watering = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/water.mp3')
+        # sound
+        self.watering = pygame.mixer.Sound('audio/water.mp3')
         self.watering.set_volume(0.2)
+
     def use_tool(self):
         if self.selected_tool == 'hoe':
             self.soil_layer.get_hit(self.target_pos)
@@ -76,6 +78,7 @@ class Player(pygame.sprite.Sprite):
         if self.selected_tool == 'water':
             self.soil_layer.water(self.target_pos)
             self.watering.play()
+
     def get_target_pos(self):
 
         self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
@@ -92,7 +95,7 @@ class Player(pygame.sprite.Sprite):
                            'right_axe': [], 'left_axe': [], 'up_axe': [], 'down_axe': [],
                            'right_water': [], 'left_water': [], 'up_water': [], 'down_water': [], }
         for animation in self.animations.keys():
-            full_path = 'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/character/' + animation
+            full_path = 'graphics/character/' + animation
             self.animations[animation] = import_folder(full_path)
 
     def animate(self, dt):
@@ -147,8 +150,7 @@ class Player(pygame.sprite.Sprite):
                 self.selected_seed = self.seeds[self.seed_index]
 
             if keys[pygame.K_RETURN]:
-                self.toggle_shop()
-                collided_interaction_sprite = pygame.sprite.spritecollide(self,self.interaction,False)
+                collided_interaction_sprite = pygame.sprite.spritecollide(self, self.interaction, False)
                 if collided_interaction_sprite:
                     if collided_interaction_sprite[0].name == 'Trader':
                         self.toggle_shop()
@@ -210,3 +212,4 @@ class Player(pygame.sprite.Sprite):
         self.get_target_pos()
         self.move(dt)
         self.animate(dt)
+

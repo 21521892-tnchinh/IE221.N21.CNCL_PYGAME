@@ -7,7 +7,7 @@ class Overlay:
         self.display_surface = pygame.display.get_surface()
         self.player = player
         #imports
-        overlay_path = 'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/overlay/'
+        overlay_path = 'graphics/overlay/'
         self.tools_surf = {tool: pygame.image.load(f'{overlay_path}{tool}.png').convert_alpha() for tool in player.tools}
         self.seeds_surf = {seed: pygame.image.load(f'{overlay_path}{seed}.png').convert_alpha() for seed in player.seeds}
 

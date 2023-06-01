@@ -21,7 +21,7 @@ class Plant(pygame.sprite.Sprite):
     def __init__(self, plant_type, groups, soil, check_watered):
         super().__init__(groups)
         self.plant_type = plant_type
-        self.frames = import_folder(f'D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/fruit/{plant_type}')
+        self.frames = import_folder(f'graphics/fruit/{plant_type}')
         self.soil = soil
         self.check_watered = check_watered
 
@@ -62,24 +62,24 @@ class SoilLayer:
         self.plant_sprites = pygame.sprite.Group()
 
         # graphics
-        self.soil_surfs = import_folder_dict('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/soil/')
-        self.water_surfs = import_folder('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/soil_water')
+        self.soil_surfs = import_folder_dict('graphics/soil/')
+        self.water_surfs = import_folder('graphics/soil_water')
 
         self.create_soil_grid()
         self.create_hit_rects()
 
         #sound
-        self.hoe_sound = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/hoe.wav')
+        self.hoe_sound = pygame.mixer.Sound('audio/hoe.wav')
         self.hoe_sound.set_volume(0.2)
 
-        self.plant_sound = pygame.mixer.Sound('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/audio/plant.wav')
+        self.plant_sound = pygame.mixer.Sound('audio/plant.wav')
         self.plant_sound.set_volume(0.2)
     def create_soil_grid(self):
-        ground = pygame.image.load('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/graphics/world/ground.png')
+        ground = pygame.image.load('graphics/world/ground.png')
         h_tiles, v_tiles = ground.get_width() // TILE_SIZE, ground.get_height() // TILE_SIZE
 
         self.grid = [[[] for col in range(h_tiles)] for row in range(v_tiles)]
-        for x, y, _ in load_pygame('D:/document/Năm 2/kỹ thuật lập trình python/s1 - setup/data/map.tmx').get_layer_by_name('Farmable').tiles():
+        for x, y, _ in load_pygame('data/map.tmx').get_layer_by_name('Farmable').tiles():
             self.grid[y][x].append('F')
 
     def create_hit_rects(self):

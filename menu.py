@@ -1,4 +1,5 @@
 import pygame
+import sys
 from settings import *
 from timer import Timer
 
@@ -9,7 +10,7 @@ class Menu:
         self.player = player
         self.toggle_menu = toggle_menu
         self.display_surface = pygame.display.get_surface()
-        self.font = pygame.font.Font('D:\document/Năm 2/kỹ thuật lập trình python/s1 - setup/font/LycheeSoda.ttf', 30)
+        self.font = pygame.font.Font('font/LycheeSoda.ttf', 30)
 
         #options
         self.width = 400
@@ -31,6 +32,7 @@ class Menu:
 
         pygame.draw.rect(self.display_surface,'White', text_rect.inflate(10,10), 0 , 4)
         self.display_surface.blit(text_surf,text_rect)
+
     def setup(self):
         self.text_surfs = []
         self.total_height = 0
@@ -113,9 +115,104 @@ class Menu:
     def update(self):
         self.input()
         self.display_money()
+
         for text_index, text_surf in enumerate( self.text_surfs):
             top = self.main_rect.top +text_index *(text_surf.get_height() +(self.padding * 2) + self.space)
             amount_list = list(self.player.item_inventory.values()) + list(self.player.seed_inventory.values())
             amount = amount_list[text_index]
             self.show_entry(text_surf,amount,top, self.index == text_index)
 
+class Pause:
+    def __init__(self, player, toggle_pause, music_enabled = True):
+        # General setup
+        self.player = player
+        self.toggle_pause = toggle_pause
+        self.music_enabled = music_enabled
+        self.display_surface = pygame.display.get_surface()
+        self.font = pygame.font.Font('font/LycheeSoda.ttf', 30)
+        self.mouse_clicked = False
+
+    def update(self):
+        # Display pause menu
+        menu_width = 400
+        menu_height = 200
+        menu_x = (SCREEN_WIDTH - menu_width) // 2
+        menu_y = (SCREEN_HEIGHT - menu_height) // 2
+        menu_surface = pygame.Surface((menu_width, menu_height))
+        background_color = (221, 196, 136)  # Màu nền menu
+        border_color = (165, 140, 82)  # Màu viền menu
+        line_color = (165, 140, 82)  # Màu đường kẻ
+
+        # Fill màu nền cho khung menu nhỏ
+        menu_surface.fill(background_color)
+
+        # Vẽ viền cho khung menu
+        pygame.draw.rect(menu_surface, border_color, menu_surface.get_rect(), 3)
+
+        # Hiển thị khung menu nhỏ tại vị trí tính toán
+        self.display_surface.blit(menu_surface, (menu_x, menu_y))
+
+        # Render menu options
+        option_font = pygame.font.Font('font/LycheeSoda.ttf', 36)
+
+        # Render tiêu đề menu
+        title_font = pygame.font.Font('font/LycheeSoda.ttf', 48)
+        title_text = title_font.render('Option', True, (0, 0, 0))
+        title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, menu_y + 40))
+        self.display_surface.blit(title_text, title_rect)
+
+        # Vẽ các ô lựa chọn
+        option_width = 20
+        option_height = 20
+        option_x = menu_x + 20
+        option_y = menu_y + 90
+
+        pygame.draw.rect(menu_surface, border_color, (option_x, option_y, option_width, option_height), 2)  # Ô lựa chọn 1
+        pygame.draw.rect(menu_surface, border_color, (option_x, option_y + 40, option_width, option_height), 2)  # Ô lựa chọn 2
+        pygame.draw.rect(menu_surface, border_color, (option_x, option_y + 80, option_width, option_height), 2)  # Ô lựa chọn 3
+
+        pause_text = option_font.render('Resume', True, (255, 255, 255))
+        pause_rect = pause_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.display_surface.blit(pause_text, pause_rect)
+
+        music_text = option_font.render('Music: On', True, (255, 255, 255)) if self.music_enabled else option_font.render(
+            'Music: Off', True, (255, 255, 255))
+        music_rect = music_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 40))
+        self.display_surface.blit(music_text, music_rect)
+
+        quit_text = option_font.render('Quit Game', True, (255, 255, 255))
+        quit_rect = quit_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 80))
+        self.display_surface.blit(quit_text, quit_rect)
+
+        # Vẽ đường kẻ ngăn cách
+        line_y1 = option_y + 30
+        line_y2 = option_y + 70
+        pygame.draw.line(menu_surface, line_color, (option_x, line_y1), (option_x + option_width, line_y1), 2)
+        pygame.draw.line(menu_surface, line_color, (option_x, line_y2), (option_x + option_width, line_y2), 2)
+
+        # Check for menu option selection
+        mouse_pos = pygame.mouse.get_pos()
+        if pause_rect.collidepoint(mouse_pos):
+            pause_text = option_font.render('Resume', True, (138, 43, 226))
+            self.display_surface.blit(pause_text, pause_rect)
+            if pygame.mouse.get_pressed()[0]:
+                self.toggle_pause()
+        elif music_rect.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0] and not self.mouse_clicked:
+                self.mouse_clicked = True
+                self.music_enabled = not self.music_enabled
+                print(self.music_enabled)
+            music_text = option_font.render('Music: On', True,
+                                            (138, 43, 226)) if self.music_enabled else option_font.render('Music: Off',
+                                                                                                     True,
+                                                                                                     (138, 43, 226))
+            self.display_surface.blit(music_text, music_rect)
+
+        elif quit_rect.collidepoint(mouse_pos):
+            quit_text = option_font.render('Quit Game', True, (138, 43, 226))
+            self.display_surface.blit(quit_text, quit_rect)
+            if pygame.mouse.get_pressed()[0]:
+                pygame.quit()
+                sys.exit()
+        if not pygame.mouse.get_pressed()[0]:
+            self.mouse_clicked = False

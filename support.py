@@ -1,6 +1,6 @@
 from os import walk
 import pygame
-
+from csv import reader
 def import_folder(path):
     surface_list = []
     for _, __, img_files in walk(path):
@@ -20,3 +20,6 @@ def import_folder_dict(path):
             surface_dict[image.split('.')[0]] = image_surf
 
     return surface_dict
+
+
+
