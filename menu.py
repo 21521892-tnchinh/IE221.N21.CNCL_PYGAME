@@ -201,7 +201,6 @@ class Pause:
             if pygame.mouse.get_pressed()[0] and not self.mouse_clicked:
                 self.mouse_clicked = True
                 self.music_enabled = not self.music_enabled
-                print(self.music_enabled)
             music_text = option_font.render('Music: On', True,
                                             (138, 43, 226)) if self.music_enabled else option_font.render('Music: Off',
                                                                                                      True,

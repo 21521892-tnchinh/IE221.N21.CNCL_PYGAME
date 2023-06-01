@@ -2,7 +2,7 @@ import pygame
 from settings import *
 from support import *
 from timer import Timer
-
+import json
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, group, collision_sprites, tree_sprites, interaction, soil_layer, toggle_shop, toggle_pause):
@@ -67,6 +67,13 @@ class Player(pygame.sprite.Sprite):
         self.watering = pygame.mixer.Sound('audio/water.mp3')
         self.watering.set_volume(0.2)
 
+    def save_shop_state(self):
+        shop_state = {
+            'item_inventory': self.item_inventory,
+            'seed_inventory': self.seed_inventory
+        }
+        with open('shop_state.json', 'w') as file:
+            json.dump(shop_state, file)
     def use_tool(self):
         if self.selected_tool == 'hoe':
             self.soil_layer.get_hit(self.target_pos)

@@ -111,15 +111,6 @@ class Level:
             z=LAYERS['ground'])
 
 
-    def damage_player(self):
-        pass
-
-    def trigger_death_particles(self):
-        pass
-
-    def add_exp(self):
-        pass
-
     def player_add(self, item):
 
         self.player.item_inventory[item] += 1
