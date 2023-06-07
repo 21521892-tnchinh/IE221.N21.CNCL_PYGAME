@@ -3,6 +3,8 @@ import sys
 from settings import *
 from level import *
 from moviepy.editor import *
+from player import *
+import json
 class Game:
     def __init__(self):
         pygame.init()
@@ -25,7 +27,6 @@ class Game:
         play_text = option_font.render('Play', True, MENU_OPTION_COLOR)
         play_rect = play_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         self.screen.blit(play_text, play_rect)
-
         quit_text = option_font.render('Quit', True, MENU_OPTION_COLOR)
         quit_rect = quit_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
         self.screen.blit(quit_text, quit_rect)
@@ -51,8 +52,9 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_m:
+                    if event.key == pygame.K_p:
                         self.level.toggle_pause()
+                        self.level.toggle_pause1()
             dt = self.clock.tick(FPS) / 1000
 
             if self.menu_active:
