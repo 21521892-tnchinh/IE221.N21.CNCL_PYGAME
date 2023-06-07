@@ -210,7 +210,7 @@ class Level:
         self.player2_created = False
         self.create_map()
         self.upgrade = Upgrade(self.player2,self.toggle_menu)
-        self.pause1 = Pause1(self.player2, self.music_enabled)
+        self.pause1 = Pause1(self.player2,self.toggle_pause1, self.music_enabled)
         self.music_enabled1 = self.pause1.music_enabled
 
     def create_attack(self):
@@ -319,6 +319,8 @@ class Level:
                     print(self.pause.change_map)
                     self.printed_change_map = True
                     self.change()
+                self.toggle_pause()
+
             else:
                 self.pause.change_map = False
                 self.printed_change_map = False

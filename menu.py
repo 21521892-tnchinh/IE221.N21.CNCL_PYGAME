@@ -226,15 +226,19 @@ class Pause:
             if pygame.mouse.get_pressed()[0]:
                 pygame.quit()
                 sys.exit()
+        keys = pygame.key.get_pressed()
 
+        if keys[pygame.K_ESCAPE]:
+            self.toggle_pause()
         if not pygame.mouse.get_pressed()[0]:
             self.mouse_clicked = False
 
 
 class Pause1:
-    def __init__(self, player, music_enabled):
+    def __init__(self, player,toggle_pause1, music_enabled):
         # General setup
         self.player = player
+        self.toggle_pause1 = toggle_pause1
         self.music_enabled = music_enabled
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font('font/LycheeSoda.ttf', 30)
@@ -301,9 +305,14 @@ class Pause1:
             if pygame.mouse.get_pressed()[0]:
                 pygame.quit()
                 sys.exit()
+        keys = pygame.key.get_pressed()
 
+        if keys[pygame.K_ESCAPE]:
+            self.toggle_pause1()
         if not pygame.mouse.get_pressed()[0]:
             self.mouse_clicked = False
+
+
 
 
 class Upgrade:

@@ -74,7 +74,7 @@ class Player(pygame.sprite.Sprite):
         self.vulnerable = True
         self.hurt_time = None
         self.invulnerability_duration = 500
-        self.player_data = self.load_player_data('save/player_data.json')
+        self.player_data = self.load_player_data('player_data.json')
 
 
         self.item_inventory = self.player_data['item_buy']
@@ -165,6 +165,8 @@ class Player(pygame.sprite.Sprite):
                 self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
                 self.selected_seed = self.seeds[self.seed_index]
 
+            if keys[pygame.K_p]:
+                self.toggle_pause()
             if keys[pygame.K_RETURN]:
                 collided_interaction_sprite = pygame.sprite.spritecollide(self, self.interaction, False)
                 if collided_interaction_sprite:
@@ -228,10 +230,9 @@ class Player(pygame.sprite.Sprite):
             'item_buy': self.item_inventory,
             'item_sell': self.seed_inventory,
             'money': self.money
-            # Thêm các thông tin khác của player vào đây
         }
 
-        with open('save/player_data.json', 'w') as file:
+        with open('player_data.json', 'w') as file:
             json.dump(player_info, file)
 
     def load_player_data(self, file_path):
@@ -578,6 +579,8 @@ class Player2(Entity):
                     self.weapon = list(weapon_data.keys())[self.weapon_index]
 
                 #  use
+                if keys[pygame.K_p]:
+                    self.toggle_pause1()
                 if keys[pygame.K_m]:
                     self.toggle_menu()
                 if keys[pygame.K_LCTRL]:

@@ -2747,6 +2747,10 @@
    'C:\\Users\\MSI MODERN '
    '15\\AppData\\Local\\Programs\\Python\\Python310\\lib\\uu.py',
    'PYMODULE'),
+  ('weapon',
+   'C:\\Users\\MSI MODERN '
+   '15\\PycharmProjects\\IE221.N21.CNCL_PYGAME\\weapon.py',
+   'PYMODULE'),
   ('webbrowser',
    'C:\\Users\\MSI MODERN '
    '15\\AppData\\Local\\Programs\\Python\\Python310\\lib\\webbrowser.py',
