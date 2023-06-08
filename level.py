@@ -57,7 +57,6 @@ class Level:
         #attack
         self.current_attack = None
         self.attack_sprites = pygame.sprite.Group()
-        self.attackable_sprites = pygame.sprite.Group()
 
         # particles
         self.animation_player = AnimationPlayer()
