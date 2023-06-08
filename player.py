@@ -424,9 +424,9 @@ class Player2(Entity):
         self.collision_sprites = collision_sprites
         # timer
         self.timers = {
-            'tool use': Timer(350, self.use_tool),
+            'tool use': Timer(350),
             'tool switch': Timer(200),
-            'seed use': Timer(350, self.use_seed),
+            'seed use': Timer(350),
             'seed switch': Timer(200)
         }
         # tools
@@ -489,19 +489,6 @@ class Player2(Entity):
         else:
             self.image.set_alpha(255)
 
-    def use_tool(self):
-
-        if self.selected_tool == 'axe':
-            for tree in self.tree_sprites.sprites():
-                if tree.rect.collidepoint(self.target_pos):
-                    tree.damage()
-        if self.selected_tool == 'axe':
-            for tree in self.tree_sprites.sprites():
-                if tree.rect.collidepoint(self.target_pos):
-                    tree.damage()
-        if self.selected_tool == 'water':
-            self.soil_layer.water(self.target_pos)
-            self.watering.play()
 
     def get_target_pos(self):
 
